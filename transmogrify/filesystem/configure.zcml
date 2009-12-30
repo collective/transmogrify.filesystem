@@ -1,0 +1,12 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="transmogrify.filesystem">
+
+    <include package="collective.transmogrifier" />
+    
+    <utility
+        component=".source.FilesystemSource"
+        name="transmogrify.filesystem"
+        />
+
+</configure>

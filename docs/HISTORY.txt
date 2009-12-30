@@ -1,0 +1,9 @@
+Changelog for transmogrify.filesystem
+
+    (name of developer listed in brackets)
+
+transmogrify.filesystem - 1.0a1 Unreleased
+
+    - Initial package structure.
+      [zopeskel]
+
