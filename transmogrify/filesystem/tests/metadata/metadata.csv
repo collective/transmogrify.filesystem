@@ -1,0 +1,4 @@
+path,title,description
+/file1.txt,File 1,File 1 description
+/subdir,Subdir,Subdir description
+/subdir/file2.txt,File 2,File 2 description
