@@ -8,7 +8,7 @@ from zope.interface import implements, classProvides
 from collective.transmogrifier.interfaces import ISectionBlueprint
 from collective.transmogrifier.interfaces import ISection
 
-from collective.transmogrifier.utils import resolvePackageReferenceOrFile
+from collective.transmogrifier.utils import resolvePackageReference
 from collective.transmogrifier.utils import Matcher
 
 from OFS.Image import File
@@ -27,11 +27,11 @@ class FilesystemSource(object):
         self.options = options
         self.previous = previous
         
-        self.directory  = resolvePackageReferenceOrFile(options['directory'])
+        self.directory  = resolvePackageReference(options['directory'])
         self.metadata   = None
         
         if 'metadata' in options:
-            self.metadata = resolvePackageReferenceOrFile(options['metadata'])
+            self.metadata = resolvePackageReference(options['metadata'])
         
         self.requireMetadata = options.get('require-metadata', 'false').lower() != 'false'
         
