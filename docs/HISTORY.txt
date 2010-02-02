@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0b2 (Unreleased)
+------------------
+
+    - update api resolvePackageReferenceOrFile -> resolvePackageReference
+      [toutpt]
+
 1.0b1 (2009-12-30)
 ------------------
 
