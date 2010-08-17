@@ -4,6 +4,10 @@ Changelog
 1.0b2 (Unreleased)
 ------------------
 
+    - Added option 'delimiter' so you can choose a character that delimits
+      your Metadata CSV file.
+      [zupo]
+    
     - Fixed test_empty_directory by ignoring .svn and similar directories.
       [zupo]
 

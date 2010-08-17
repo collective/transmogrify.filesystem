@@ -102,6 +102,8 @@ The available options are:
 ``require-metadata``
     If set to True, only files with matching metadata are included.
     Directories are always included regardless. Defaults to False.
+``delimiter``
+    A character that delimits data in your Metadata CSV file.
 ``folder-type``
     The portal type for folders to create (if required). Defaults to
     'Folder'.

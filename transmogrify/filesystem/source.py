@@ -29,9 +29,11 @@ class FilesystemSource(object):
         
         self.directory  = resolvePackageReferenceOrFile(options['directory'])
         self.metadata   = None
+        self.delimiter = None
         
         if 'metadata' in options:
             self.metadata = resolvePackageReferenceOrFile(options['metadata'])
+            self.delimiter = options.get('delimiter', ',')
         
         self.requireMetadata = options.get('require-metadata', 'false').lower() != 'false'
         
@@ -58,8 +60,13 @@ class FilesystemSource(object):
         
         if self.metadata:
             metadataFile = open(self.metadata, 'rb')
-            reader = csv.DictReader(metadataFile)
-            if reader.fieldnames is None or 'path' not in reader.fieldnames:
+            reader = csv.DictReader(metadataFile, delimiter=self.delimiter)
+
+            if reader.fieldnames is None:
+                raise ValueError("Metadata CSV is empty.")
+            if len(reader.fieldnames) is 1 and self.delimiter not in reader.fieldnames[0]:
+                raise ValueError("Metadata CSV does not use the specified delimiter: %s" %(self.delimiter))
+            if 'path' not in reader.fieldnames:
                 raise ValueError("Metadata CSV file does not have a 'path' column.")
             
             for row in reader:

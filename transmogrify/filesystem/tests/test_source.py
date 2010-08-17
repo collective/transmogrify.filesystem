@@ -48,7 +48,15 @@ class FilesystemSourceTest(unittest.TestCase):
                    'directory': 'transmogrify.filesystem.tests:empty'}
         source = self._makeOne(**options)
         self.assertRaises(ValueError, list, source)
-    
+
+    def test_metadata_bad_delimiter(self):
+        options = {'require-metadata': 'true',
+                   'metadata':  'transmogrify.filesystem.tests:metadata/delimiter.csv',
+                   'directory': 'transmogrify.filesystem.tests:metadata',
+                   'delimiter': ',',}
+        source = self._makeOne(**options)
+        self.assertRaises(ValueError, list, source)
+        
     def test_normal(self):
         source = self._makeOne(directory='transmogrify.filesystem.tests:data',
                                ignored='re:.*\.svn.*\nre:.*\.DS_Store\n')
@@ -421,7 +429,7 @@ class FilesystemSourceTest(unittest.TestCase):
                     
         source = self._makeOne(**options)
         results = list(source)
-        self.assertEquals(5, len(results))
+        self.assertEquals(6, len(results))
         
         # Folders at each level come first
         self.assertEquals({'_path': '/subdir', '_type': 'Folder',
@@ -430,34 +438,36 @@ class FilesystemSourceTest(unittest.TestCase):
         # No metadata for this item
         self.assertEquals({'_path': '/subdir2', '_type': 'Folder'}, results[1])
         
-        # Then files, in filename order
-        self.assertEquals('text/plain',                  results[2]['_mimetype'])
-        self.assertEquals('/file1.txt',                  results[2]['_path'])
-        self.assertEquals('File',                        results[2]['_type'])
-        self.assertEquals('file1.txt',                   results[2]['file'].filename)
-        self.assertEquals('file1.txt',                   results[2]['file'].id())
-        self.assertEquals('text/plain',                  results[2]['file'].content_type)
-        self.assertEquals('File 1',                      results[2]['title'])
-        self.assertEquals('File 1 description',          results[2]['description'])
+        # file number #3 is delimiter.csv
         
+        # Then files, in filename order
         self.assertEquals('text/plain',                  results[3]['_mimetype'])
-        self.assertEquals('/subdir/file2.txt',           results[3]['_path'])
+        self.assertEquals('/file1.txt',                  results[3]['_path'])
         self.assertEquals('File',                        results[3]['_type'])
-        self.assertEquals('file2.txt',                   results[3]['file'].filename)
-        self.assertEquals('file2.txt',                   results[3]['file'].id())
+        self.assertEquals('file1.txt',                   results[3]['file'].filename)
+        self.assertEquals('file1.txt',                   results[3]['file'].id())
         self.assertEquals('text/plain',                  results[3]['file'].content_type)
-        self.assertEquals('File 2',                      results[3]['title'])
-        self.assertEquals('File 2 description',          results[3]['description'])
+        self.assertEquals('File 1',                      results[3]['title'])
+        self.assertEquals('File 1 description',          results[3]['description'])
+        
+        self.assertEquals('text/plain',                  results[4]['_mimetype'])
+        self.assertEquals('/subdir/file2.txt',           results[4]['_path'])
+        self.assertEquals('File',                        results[4]['_type'])
+        self.assertEquals('file2.txt',                   results[4]['file'].filename)
+        self.assertEquals('file2.txt',                   results[4]['file'].id())
+        self.assertEquals('text/plain',                  results[4]['file'].content_type)
+        self.assertEquals('File 2',                      results[4]['title'])
+        self.assertEquals('File 2 description',          results[4]['description'])
         
         # No metadata here either
-        self.assertEquals('text/plain',                  results[4]['_mimetype'])
-        self.assertEquals('/subdir/file3.txt',           results[4]['_path'])
-        self.assertEquals('File',                        results[4]['_type'])
-        self.assertEquals('file3.txt',                   results[4]['file'].filename)
-        self.assertEquals('file3.txt',                   results[4]['file'].id())
-        self.assertEquals('text/plain',                  results[4]['file'].content_type)
-        self.assertEquals(None,                          results[4].get('title', None))
-        self.assertEquals(None,                          results[4].get('description', None))
+        self.assertEquals('text/plain',                  results[5]['_mimetype'])
+        self.assertEquals('/subdir/file3.txt',           results[5]['_path'])
+        self.assertEquals('File',                        results[5]['_type'])
+        self.assertEquals('file3.txt',                   results[5]['file'].filename)
+        self.assertEquals('file3.txt',                   results[5]['file'].id())
+        self.assertEquals('text/plain',                  results[5]['file'].content_type)
+        self.assertEquals(None,                          results[5].get('title', None))
+        self.assertEquals(None,                          results[5].get('description', None))
         
         # NOTE: metadata.csv file is implicitly excluded
         
@@ -498,6 +508,30 @@ class FilesystemSourceTest(unittest.TestCase):
         self.assertEquals('File 2',                      results[3]['title'])
         self.assertEquals('File 2 description',          results[3]['description'])
         
+        # Note: items without metadata were ignored
+
+    def test_metadata_custom_delimiter(self):
+        options = {'directory': 'transmogrify.filesystem.tests:metadata',
+                   'metadata':  'transmogrify.filesystem.tests:metadata/delimiter.csv',
+                   'ignored': 're:.*\.svn.*\nre:.*\.DS_Store\n',
+                   'require-metadata': 'true',
+                   'delimiter': '|',
+                  }
+                    
+        source = self._makeOne(**options)
+        results = list(source)
+        self.assertEquals(3, len(results))
+                
+        # Parsed file
+        self.assertEquals('text/plain',                  results[2]['_mimetype'])
+        self.assertEquals('/file1.txt',                  results[2]['_path'])
+        self.assertEquals('File',                        results[2]['_type'])
+        self.assertEquals('file1.txt',                   results[2]['file'].filename)
+        self.assertEquals('file1.txt',                   results[2]['file'].id())
+        self.assertEquals('text/plain',                  results[2]['file'].content_type)
+        self.assertEquals('File 1',                      results[2]['title'])
+        self.assertEquals('File 1 description',          results[2]['description'])
+                
         # Note: items without metadata were ignored
 
 def test_suite():
