@@ -14,7 +14,8 @@ class FilesystemSourceTest(unittest.TestCase):
         self.assertEquals([], list(source))
 
     def test_empty_directory(self):
-        source = self._makeOne(directory='transmogrify.filesystem.tests:empty')
+        source = self._makeOne(directory='transmogrify.filesystem.tests:empty',
+                                ignored='re:.*\.svn.*\nre:.*\.DS_Store\n')
         self.assertEquals([], list(source))
     
     def test_directory_not_found(self):

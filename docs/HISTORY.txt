@@ -4,6 +4,9 @@ Changelog
 1.0b2 (Unreleased)
 ------------------
 
+    - Fixed test_empty_directory by ignoring .svn and similar directories.
+      [zupo]
+
     - Reverted toutpt's change since resolvePackageReferenceOrFile is now 
       available in a released version of transmogrifier.
       [zupo]
