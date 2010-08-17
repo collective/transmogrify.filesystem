@@ -104,6 +104,10 @@ The available options are:
     Directories are always included regardless. Defaults to False.
 ``delimiter``
     A character that delimits data in your Metadata CSV file.
+``strict``
+    If this is set to True, transmogrify.filesystem will break if it finds
+    a row of data in Metadata CSV which field-count does not match
+    field-count of the first row in the CSV file.
 ``folder-type``
     The portal type for folders to create (if required). Defaults to
     'Folder'.

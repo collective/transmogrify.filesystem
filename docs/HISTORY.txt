@@ -4,6 +4,11 @@ Changelog
 1.0b2 (Unreleased)
 ------------------
 
+    - Added option 'strict' that will make transmogrify.filesystem break
+      if it finds a row of data in Metadata CSV which field-count does not match
+      field-count of the first row in the CSV file.
+      [zupo]
+
     - Added option 'delimiter' so you can choose a character that delimits
       your Metadata CSV file.
       [zupo]

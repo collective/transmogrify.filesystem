@@ -56,6 +56,15 @@ class FilesystemSourceTest(unittest.TestCase):
                    'delimiter': ',',}
         source = self._makeOne(**options)
         self.assertRaises(ValueError, list, source)
+
+    def test_metadata_strict_error(self):
+        options = {'require-metadata': 'true',
+                   'metadata':  'transmogrify.filesystem.tests:metadata/delimiter.csv',
+                   'directory': 'transmogrify.filesystem.tests:metadata',
+                   'delimiter': '|',
+                   'strict':    'True'}
+        source = self._makeOne(**options)
+        self.assertRaises(ValueError, list, source)
         
     def test_normal(self):
         source = self._makeOne(directory='transmogrify.filesystem.tests:data',
@@ -521,6 +530,30 @@ class FilesystemSourceTest(unittest.TestCase):
         source = self._makeOne(**options)
         results = list(source)
         self.assertEquals(3, len(results))
+                
+        # Parsed file
+        self.assertEquals('text/plain',                  results[2]['_mimetype'])
+        self.assertEquals('/file1.txt',                  results[2]['_path'])
+        self.assertEquals('File',                        results[2]['_type'])
+        self.assertEquals('file1.txt',                   results[2]['file'].filename)
+        self.assertEquals('file1.txt',                   results[2]['file'].id())
+        self.assertEquals('text/plain',                  results[2]['file'].content_type)
+        self.assertEquals('File 1',                      results[2]['title'])
+        self.assertEquals('File 1 description',          results[2]['description'])
+                
+        # Note: items without metadata were ignored
+
+    def test_metadata_strict(self):
+        options = {'directory': 'transmogrify.filesystem.tests:metadata',
+                   'metadata':  'transmogrify.filesystem.tests:metadata/metadata.csv',
+                   'ignored': 're:.*\.svn.*\nre:.*\.DS_Store\n',
+                   'require-metadata': 'true',
+                   'strict': 'True',
+                  }
+                    
+        source = self._makeOne(**options)
+        results = list(source)
+        self.assertEquals(4, len(results))
                 
         # Parsed file
         self.assertEquals('text/plain',                  results[2]['_mimetype'])

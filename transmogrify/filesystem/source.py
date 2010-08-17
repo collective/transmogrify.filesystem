@@ -30,10 +30,12 @@ class FilesystemSource(object):
         self.directory  = resolvePackageReferenceOrFile(options['directory'])
         self.metadata   = None
         self.delimiter = None
+        self.strict = False
         
         if 'metadata' in options:
             self.metadata = resolvePackageReferenceOrFile(options['metadata'])
             self.delimiter = options.get('delimiter', ',')
+            self.strict = options.get('strict', False)
         
         self.requireMetadata = options.get('require-metadata', 'false').lower() != 'false'
         
@@ -68,8 +70,16 @@ class FilesystemSource(object):
                 raise ValueError("Metadata CSV does not use the specified delimiter: %s" %(self.delimiter))
             if 'path' not in reader.fieldnames:
                 raise ValueError("Metadata CSV file does not have a 'path' column.")
+
+            if self.strict:
+                field_count = len(reader.fieldnames)
             
             for row in reader:
+                
+                if self.strict and field_count != len(row):
+                    raise ValueError("Found a row in Metadata CSV that has a different count of fields \
+                        compared to first row: %s" %(row))
+                
                 path = row['path']
                 data = row.copy()
                 del data['path']
