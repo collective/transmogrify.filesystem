@@ -1,11 +1,18 @@
+import os
 import unittest
 from transmogrify.filesystem.source import FilesystemSource
+
 
 class FilesystemSourceTest(unittest.TestCase):
 
     def _makeOne(self, transmogrifier={}, name='test', previous=(), **options):
         return FilesystemSource(transmogrifier, name, options, previous)
     
+    def test_plain_filename(self):
+        """Test that also plain filenames can be passed as directory. """
+        source = self._makeOne(directory=os.getcwd())
+        self.assertEquals([], list(source))
+
     def test_empty_directory(self):
         source = self._makeOne(directory='transmogrify.filesystem.tests:empty')
         self.assertEquals([], list(source))
