@@ -22,7 +22,6 @@ class FilesystemSource(object):
     classProvides(ISectionBlueprint)
 
     def __init__(self, transmogrifier, name, options, previous):
-        import pdb; pdb.set_trace( )
         self.transmogrifier = transmogrifier
         self.name = name
         self.options = options
