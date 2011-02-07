@@ -438,7 +438,8 @@ class FilesystemSourceTest(unittest.TestCase):
                     
         source = self._makeOne(**options)
         results = list(source)
-        self.assertEquals(6, len(results))
+
+        self.assertEquals(7, len(results))
         
         # Folders at each level come first
         self.assertEquals({'_path': '/subdir', '_type': 'Folder',
@@ -459,24 +460,24 @@ class FilesystemSourceTest(unittest.TestCase):
         self.assertEquals('File 1',                      results[3]['title'])
         self.assertEquals('File 1 description',          results[3]['description'])
         
-        self.assertEquals('text/plain',                  results[4]['_mimetype'])
-        self.assertEquals('/subdir/file2.txt',           results[4]['_path'])
-        self.assertEquals('File',                        results[4]['_type'])
-        self.assertEquals('file2.txt',                   results[4]['file'].filename)
-        self.assertEquals('file2.txt',                   results[4]['file'].id())
-        self.assertEquals('text/plain',                  results[4]['file'].content_type)
-        self.assertEquals('File 2',                      results[4]['title'])
-        self.assertEquals('File 2 description',          results[4]['description'])
+        self.assertEquals('text/plain',                  results[5]['_mimetype'])
+        self.assertEquals('/subdir/file2.txt',           results[5]['_path'])
+        self.assertEquals('File',                        results[5]['_type'])
+        self.assertEquals('file2.txt',                   results[5]['file'].filename)
+        self.assertEquals('file2.txt',                   results[5]['file'].id())
+        self.assertEquals('text/plain',                  results[5]['file'].content_type)
+        self.assertEquals('File 2',                      results[5]['title'])
+        self.assertEquals('File 2 description',          results[5]['description'])
         
         # No metadata here either
-        self.assertEquals('text/plain',                  results[5]['_mimetype'])
-        self.assertEquals('/subdir/file3.txt',           results[5]['_path'])
-        self.assertEquals('File',                        results[5]['_type'])
-        self.assertEquals('file3.txt',                   results[5]['file'].filename)
-        self.assertEquals('file3.txt',                   results[5]['file'].id())
-        self.assertEquals('text/plain',                  results[5]['file'].content_type)
-        self.assertEquals(None,                          results[5].get('title', None))
-        self.assertEquals(None,                          results[5].get('description', None))
+        self.assertEquals('text/plain',                  results[6]['_mimetype'])
+        self.assertEquals('/subdir/file3.txt',           results[6]['_path'])
+        self.assertEquals('File',                        results[6]['_type'])
+        self.assertEquals('file3.txt',                   results[6]['file'].filename)
+        self.assertEquals('file3.txt',                   results[6]['file'].id())
+        self.assertEquals('text/plain',                  results[6]['file'].content_type)
+        self.assertEquals(None,                          results[6].get('title', None))
+        self.assertEquals(None,                          results[6].get('description', None))
         
         # NOTE: metadata.csv file is implicitly excluded
         
@@ -576,12 +577,13 @@ class FilesystemSourceTest(unittest.TestCase):
                     
         source = self._makeOne(**options)
         results = list(source)
-        self.assertEquals(1, len(results))
+
+        self.assertEquals(3, len(results))
                 
         # Parsed file
-        self.assertEquals('text/html',                  results[0]['_mimetype'])
-        self.assertEquals('/file1.txt',                 results[0]['_path'])
-        self.assertEquals('News Item',                  results[0]['_type'])
+        self.assertEquals('text/html',                  results[2]['_mimetype'])
+        self.assertEquals('/file1.txt',                 results[2]['_path'])
+        self.assertEquals('News Item',                  results[2]['_type'])
      
         # Note: items without metadata were ignored           
 

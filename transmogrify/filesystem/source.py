@@ -90,7 +90,7 @@ class FilesystemSource(object):
         
         if not os.path.exists(self.directory):
             raise ValueError("Directory %s does not exist" % self.directory)
-        
+
         for dirpath, dirnames, filenames in os.walk(self.directory):
             
             # Create folders first, if necessary
@@ -125,7 +125,8 @@ class FilesystemSource(object):
                 if self.requireMetadata and zodbPath not in metadata:
                     continue
 
-                if metadata[zodbPath]['portal_type'] in ['News Item', 'Document']:
+                if zodbPath in metadata and 'portal_type' in metadata[zodbPath] and \
+                   metadata[zodbPath]['portal_type'] in ['News Item', 'Document']:
                     # if portal_type is given in metadata.csv, use it!
                     _type = metadata[zodbPath]['portal_type']
                     mimeType = 'text/html'
