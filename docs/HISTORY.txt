@@ -4,7 +4,7 @@ Changelog
 1.0b3 (unreleased)
 ------------------
 
-    - Added option to specify items portal_type inside metadata.csv.
+    - Added option to specify item's portal_type inside metadata.csv.
       [zupo]
 
 
