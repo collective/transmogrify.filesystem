@@ -567,5 +567,23 @@ class FilesystemSourceTest(unittest.TestCase):
                 
         # Note: items without metadata were ignored
 
+    def test_metadata_portal_type(self):
+        options = {'directory': 'transmogrify.filesystem.tests:metadata',
+                   'metadata':  'transmogrify.filesystem.tests:metadata/portal_type.csv',
+                   'ignored': 're:.*\.svn.*\nre:.*\.DS_Store\n',
+                   'require-metadata': 'true',
+                  }
+                    
+        source = self._makeOne(**options)
+        results = list(source)
+        self.assertEquals(1, len(results))
+                
+        # Parsed file
+        self.assertEquals('text/html',                  results[0]['_mimetype'])
+        self.assertEquals('/file1.txt',                 results[0]['_path'])
+        self.assertEquals('News Item',                  results[0]['_type'])
+     
+        # Note: items without metadata were ignored           
+
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)

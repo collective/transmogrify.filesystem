@@ -124,19 +124,28 @@ class FilesystemSource(object):
                 
                 if self.requireMetadata and zodbPath not in metadata:
                     continue
-                
-                _type = self.fileType
-                fieldname = self.fileField
-                mimeType = self.defaultMimeType
-                
-                # Try to guess mime type and content type
-                basename, extension = os.path.splitext(filename)
-                if extension and extension.lower() in mimetypes.types_map:
-                    mimeType = mimetypes.types_map[extension.lower()]
-                    if mimeType.startswith('image'):
-                        _type = self.imageType
-                        fieldname = self.imageField
+
+                if metadata[zodbPath]['portal_type'] in ['News Item', 'Document']:
+                    # if portal_type is given in metadata.csv, use it!
+                    _type = metadata[zodbPath]['portal_type']
+                    mimeType = 'text/html'
+                    fieldname = 'text'
+                    self.wrapData = False
+                else:                
+                    # else make it File or Image
+                    _type = self.fileType
+                    fieldname = self.fileField  
+                    mimeType = self.defaultMimeType
+                                  
+                    # Try to guess mime type and content type
+                    basename, extension = os.path.splitext(filename)
+                    if extension and extension.lower() in mimetypes.types_map:
+                        mimeType = mimetypes.types_map[extension.lower()]
+                        if mimeType.startswith('image'):
+                            _type = self.imageType
+                            fieldname = self.imageField
                         
+                # read in main content of this item        
                 infile = open(filePath, 'rb')
                 if self.wrapData:
                     fileData = File(filename, filename, infile, mimeType)
