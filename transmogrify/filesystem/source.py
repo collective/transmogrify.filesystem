@@ -126,7 +126,7 @@ class FilesystemSource(object):
                     continue
 
                 if zodbPath in metadata and 'portal_type' in metadata[zodbPath] and \
-                   metadata[zodbPath]['portal_type'] in ['News Item', 'Document']:
+                   metadata[zodbPath]['portal_type'] in ['News Item', 'Document', 'Event']:
                     # if portal_type is given in metadata.csv, use it!
                     _type = metadata[zodbPath]['portal_type']
                     mimeType = 'text/html'
