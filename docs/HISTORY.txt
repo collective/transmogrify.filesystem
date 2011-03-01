@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b3 (unreleased)
+1.0b3 (2011-03-01)
 ------------------
 
     - Added option to specify item's portal_type inside metadata.csv.
