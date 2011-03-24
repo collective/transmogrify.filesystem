@@ -29,5 +29,7 @@ setup(name='transmogrify.filesystem',
       ],
       entry_points="""
       # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = mr.migrator
       """,
       )
