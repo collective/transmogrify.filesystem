@@ -28,7 +28,7 @@ setup(name='transmogrify.filesystem',
           'collective.transmogrifier',
       ],
       entry_points="""
-      [collective.transmogrifier]
-      transmogrify.filesystem=transmogrify.filesystem
+      [z3c.autoinclude.plugin]
+      target = transmogrify
       """,
       )
