@@ -11,6 +11,7 @@ from collective.transmogrifier.interfaces import ISection
 from collective.transmogrifier.utils import resolvePackageReferenceOrFile
 from collective.transmogrifier.utils import Matcher
 
+from OFS.Image import File
 
 class FilesystemSource(object):
     """Custom section which can read files, folders and and images from the
@@ -148,12 +149,8 @@ class FilesystemSource(object):
                 # read in main content of this item        
                 infile = open(filePath, 'rb')
                 if self.wrapData:
-                    try:
-                        from OFS.Image import File
-                        fileData = File(filename, filename, infile, mimeType)
-                        fileData.filename = filename
-                    except:
-                        raise ImportError, "Unable to wrap data, missing OFS"
+                    fileData = File(filename, filename, infile, mimeType)
+                    fileData.filename = filename
                 else:
                     fileData = infile.read()
                 infile.close()
