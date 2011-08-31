@@ -19,6 +19,15 @@ your ``setup.py``, and include its configuration in ``configure.zcml``::
 
     <include package="transmogrify.filesystem" />
 
+Alternatively use ``mr.migrator`` to execute your pipeline, and add
+``transmogrifier.filesystem`` to the list of eggs in the ``mr.migrator``
+section of your buildout.cfg. See:
+http://pypi.python.org/pypi/mr.migrator/1.0b4 for more information.
+
+.. Note:: This is an experimental alternative approach to executing Transmogrifier
+   pipelines, aimed at lowering the bar of entry to Transmogrifier
+   migrations.
+
 Usage
 -----
 
