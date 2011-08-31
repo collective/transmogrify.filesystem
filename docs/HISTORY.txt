@@ -4,7 +4,11 @@ Changelog
 1.0b4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+    - Add autoinclude entry targetting ``transmogrify`` to provide
+      ``mr.migrator`` support. This means folks can list this package
+      in their ``mr.migrator`` sections (in buildout.cfg) and mr.migrator
+      will load its ZCML. 
+      [aclark]
 
 
 1.0b3 (2011-03-01)

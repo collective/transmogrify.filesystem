@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0b4dev'
+version = '1.0b4'
 
 setup(name='transmogrify.filesystem',
       version=version,
@@ -29,5 +29,7 @@ setup(name='transmogrify.filesystem',
       ],
       entry_points="""
       # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = transmogrify
       """,
       )
