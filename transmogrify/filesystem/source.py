@@ -92,7 +92,7 @@ class FilesystemSource(object):
             raise ValueError("Directory %s does not exist" % self.directory)
 
         for dirpath, dirnames, filenames in os.walk(self.directory):
-            
+            wrapData = self.wrapData
             # Create folders first, if necessary
             for dirname in dirnames:
                 dirPath = os.path.join(dirpath, dirname)
@@ -129,9 +129,18 @@ class FilesystemSource(object):
                    metadata[zodbPath]['portal_type'] in ['News Item', 'Document', 'Event']:
                     # if portal_type is given in metadata.csv, use it!
                     _type = metadata[zodbPath]['portal_type']
+
                     mimeType = 'text/html'
                     fieldname = 'text'
-                    self.wrapData = False
+                    wrapData = False
+                    #if the file is an image: use the image field of the news item, otherwise use the text field
+                    if _type == 'News Item':
+                        basename, extension = os.path.splitext(filename)
+                        if extension and extension.lower() in mimetypes.types_map and mimetypes.types_map[extension.lower()].startswith('image'):
+                            mimeType = mimetypes.types_map[extension.lower()]
+                            fieldname = self.imageField # the same of news
+                            wrapData = self.wrapData
+
                 else:                
                     # else make it File or Image
                     _type = self.fileType
@@ -148,7 +157,7 @@ class FilesystemSource(object):
                         
                 # read in main content of this item        
                 infile = open(filePath, 'rb')
-                if self.wrapData:
+                if wrapData:
                     fileData = File(filename, filename, infile, mimeType)
                     fileData.filename = filename
                 else:

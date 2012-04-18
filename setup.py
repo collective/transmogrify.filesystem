@@ -6,7 +6,7 @@ version = '1.0b5dev'
 setup(name='transmogrify.filesystem',
       version=version,
       description="Transmogrifier source for reading files from the filesystem",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
