@@ -82,6 +82,13 @@ relative to the Transmogrifier context (normally the Plone site root), with
 a leading slash, as shown here. These paths will be matched against the files
 loaded from the data directory.
 
+With portal_type column you can pick a specific content type.
+When the portal type is "News Item" it checks whether the file is an image or 
+not, and acts accordingly.
+When the portal type is Document or Event the content of the file will be
+written in the "text" field.
+
+
 Subsequent columns are passed along as-is, so in this case, the ``title`` and
 ``description`` fields will be set as given in the CSV file.
 

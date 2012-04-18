@@ -4,6 +4,8 @@ Changelog
 1.0b5 (Unreleased)
 ------------------
 
+    - When the portal type is "News Item" it checks whether the file is an image or 
+      not, and acts accordingly [sithmel]
 
 1.0b4 (2011-08-31)
 ------------------
