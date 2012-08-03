@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0b5dev'
+version = '1.0b6'
 
 setup(name='transmogrify.filesystem',
       version=version,
