@@ -99,6 +99,10 @@ class FilesystemSource(object):
             raise ValueError("Directory %s does not exist" % self.directory)
 
         for dirpath, dirnames, filenames in os.walk(self.directory):
+
+            dirnames.sort()
+            filenames.sort()
+
             wrapData = self.wrapData
             # Create folders first, if necessary
             for dirname in dirnames:
