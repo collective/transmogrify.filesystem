@@ -1,11 +1,16 @@
 Changelog
 =========
 
-1.0b5 (Unreleased)
+1.0b5 (2012-08-03)
 ------------------
 
-    - When the portal type is "News Item" it checks whether the file is an image or 
+    - Sort subfolders and filenames after you read it from the filesystem; this
+      avoids different order of subdirs/files on different OSes.
+      [zupo]
+
+    - When the portal type is "News Item" it checks whether the file is an image or
       not, and acts accordingly [sithmel]
+
 
 1.0b4 (2011-08-31)
 ------------------
@@ -13,7 +18,7 @@ Changelog
     - Add autoinclude entry targetting ``transmogrify`` to provide
       ``mr.migrator`` support. This means folks can list this package
       in their ``mr.migrator`` sections (in buildout.cfg) and mr.migrator
-      will load its ZCML. 
+      will load its ZCML.
       [aclark]
 
 
@@ -35,11 +40,11 @@ Changelog
     - Added option 'delimiter' so you can choose a character that delimits
       your Metadata CSV file.
       [zupo]
-    
+
     - Fixed test_empty_directory by ignoring .svn and similar directories.
       [zupo]
 
-    - Reverted toutpt's change since resolvePackageReferenceOrFile is now 
+    - Reverted toutpt's change since resolvePackageReferenceOrFile is now
       available in a released version of transmogrifier.
       [zupo]
 
